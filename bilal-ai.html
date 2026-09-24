@@ -1,96 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
+
     <title>Bilal AI | SAUTUS-SUNNAH</title>
+
     <meta name="description"
           content="Bilal AI — Islamic Q&A assistant by SAUTUS-SUNNAH. Ask questions in Hausa, English or Arabic.">
+
     <link rel="stylesheet" href="style.css">
+
 </head>
+
+
 <body>
+
 <header>
+
     <div class="container header-content">
+
         <a href="index.html" class="logo">
             SAUTUS<span>-SUNNAH</span>
         </a>
+
         <nav>
+
             <a href="index.html">
                 Home
             </a>
+
             <a href="student.html">
                 Student Companion
             </a>
+
         </nav>
+
     </div>
+
 </header>
+
+
 <main>
+
 <section class="ai-page">
+
     <div class="container ai-container">
-        <!-- AI HEADER -->
+
+
         <div class="ai-header">
+
             <div class="ai-icon">
                 🤖
             </div>
+
             <p class="small-title">
                 SAUTUS-SUNNAH
             </p>
+
             <h1>
                 Bilal AI
             </h1>
+
             <p>
                 Your Islamic study assistant for Qur'an,
                 Authentic Sunnah and beneficial Islamic knowledge.
             </p>
+
         </div>
-        <!-- LANGUAGE -->
+
+
         <div class="language-box">
+
             <label for="language">
                 Response Language
             </label>
+
             <select id="language">
+
                 <option value="auto">
                     Same language as my question
                 </option>
+
                 <option value="english">
                     English
                 </option>
+
                 <option value="hausa">
                     Hausa
                 </option>
+
                 <option value="arabic">
                     العربية
                 </option>
+
             </select>
+
         </div>
-        <!-- CHAT AREA -->
+
+
         <div class="chat-box" id="chatBox">
+
             <div class="message bot">
+
                 <div class="message-name">
                     Bilal AI
                 </div>
+
                 <p>
                     Assalamu Alaikum! 👋
                 </p>
+
                 <p>
                     I am Bilal AI, an Islamic study assistant
                     designed to help you learn and research
                     Qur'an, Authentic Sunnah and Islamic knowledge.
                 </p>
+
                 <p>
                     You can ask your question in
                     <strong>English, Hausa or Arabic.</strong>
                 </p>
+
             </div>
+
         </div>
-        <!-- QUESTION INPUT -->
+
+
         <div class="ai-input-area">
+
             <textarea
                 id="question"
                 rows="3"
                 placeholder="Ask your Islamic question..."
             ></textarea>
+
             <button
                 type="button"
                 id="askButton"
@@ -98,70 +146,208 @@
             >
                 Ask Bilal AI →
             </button>
+
         </div>
-        <!-- DISCLAIMER -->
+
+
         <div class="ai-note">
+
             <strong>Important:</strong>
+
             Bilal AI is a study and research assistant.
             Always verify important religious matters with
             qualified scholars and trusted sources.
+
         </div>
+
+
     </div>
+
 </section>
+
 </main>
+
+
 <footer>
+
     <div class="container">
+
         <div class="footer-logo">
             SAUTUS-SUNNAH
         </div>
+
         <p class="footer-motto">
             Yada Sahihiyar Sunnah Bisa Fahimtar Salafus Salih
         </p>
+
         <div class="footer-line"></div>
+
         <p>
             © SAUTUS-SUNNAH. All Rights Reserved.
         </p>
+
     </div>
+
 </footer>
+
+
 <script>
+
 const askButton = document.getElementById("askButton");
+
 const question = document.getElementById("question");
+
 const chatBox = document.getElementById("chatBox");
-askButton.addEventListener("click", function () {
+
+const language = document.getElementById("language");
+
+
+askButton.addEventListener("click", async function () {
+
     const userQuestion = question.value.trim();
+
     if (userQuestion === "") {
+
         alert("Please enter your question.");
+
         return;
+
     }
+
+
+    /* USER MESSAGE */
+
     const userMessage = document.createElement("div");
+
     userMessage.className = "message user";
+
     userMessage.innerHTML = `
+
         <div class="message-name">
             You
         </div>
+
         <p>
-            ${userQuestion}
+            ${escapeHTML(userQuestion)}
         </p>
+
     `;
+
     chatBox.appendChild(userMessage);
+
+
+    /* LOADING MESSAGE */
+
     const waitingMessage = document.createElement("div");
+
     waitingMessage.className = "message bot";
+
     waitingMessage.innerHTML = `
+
         <div class="message-name">
             Bilal AI
         </div>
+
         <p>
-            Your question has been received.
+            Thinking... ⏳
         </p>
-        <p>
-            AI connection and trusted Islamic source
-            retrieval will be connected in the next stage.
-        </p>
+
     `;
+
     chatBox.appendChild(waitingMessage);
+
+
     question.value = "";
+
+    askButton.disabled = true;
+
     chatBox.scrollTop = chatBox.scrollHeight;
+
+
+    try {
+
+        const response = await fetch(
+            "/.netlify/functions/bilal-ai",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    question: userQuestion,
+
+                    language: language.value
+
+                })
+
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        waitingMessage.innerHTML = `
+
+            <div class="message-name">
+                Bilal AI
+            </div>
+
+            <p>
+                ${escapeHTML(
+                    data.message ||
+                    data.error ||
+                    "No response received."
+                )}
+            </p>
+
+        `;
+
+
+    } catch (error) {
+
+        waitingMessage.innerHTML = `
+
+            <div class="message-name">
+                Bilal AI
+            </div>
+
+            <p>
+                Connection error. Please try again.
+            </p>
+
+        `;
+
+    }
+
+
+    askButton.disabled = false;
+
+    chatBox.scrollTop = chatBox.scrollHeight;
+
 });
+
+
+/* SECURITY:
+   Prevent user input from being interpreted as HTML.
+*/
+
+function escapeHTML(text) {
+
+    const div = document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
 </script>
+
+
 </body>
+
 </html>
