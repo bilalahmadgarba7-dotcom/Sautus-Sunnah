@@ -647,9 +647,91 @@ footer p:last-child {
 }
 
 
-/* ISLAMIC STUDENT COMPANION */
-/* code ɗin farko */
+<!-- ========================================
+     ISLAMIC STUDENT COMPANION
+======================================== -->
+
+<section id="student-companion" class="student-companion">
+
+    <div class="container student-content">
+
+        <div class="student-badge">
+            ISLAMIC STUDENT COMPANION
+        </div>
+
+        <h2>
+            Learn. Practice. Research. Grow.
+        </h2>
+
+        <p>
+            A digital learning companion designed for students
+            of Islamic knowledge — helping you learn, revise,
+            research, memorize Qur'an and track your progress
+            in one place.
+        </p>
+
+        <div class="student-features">
+
+            <div class="student-feature">
+                <span>🤖</span>
+                <strong>Bilal AI</strong>
+                <small>Ask Islamic questions</small>
+            </div>
+
+            <div class="student-feature">
+                <span>📖</span>
+                <strong>Learn</strong>
+                <small>Study Islamic subjects</small>
+            </div>
+
+            <div class="student-feature">
+                <span>🔎</span>
+                <strong>Research</strong>
+                <small>Qur'an & Hadith search</small>
+            </div>
+
+            <div class="student-feature">
+                <span>🕌</span>
+                <strong>Hifz</strong>
+                <small>Track Qur'an memorization</small>
+            </div>
+
+        </div>
+
+        <a href="student.html" class="btn student-btn">
+            Explore Student Companion
+        </a>
+
+    </div>
+
+</section>
 
 
-/* STUDENT COMPANION DASHBOARD */
-/* code ɗin biyu */
+<!-- ========================================
+     CALL TO ACTION
+======================================== -->
+
+<section class="cta">
+
+    <div class="container">
+
+        <p class="small-title">
+            JOIN OUR JOURNEY
+        </p>
+
+        <h2>
+            Spreading Beneficial Knowledge
+        </h2>
+
+        <p>
+            Follow SAUTUS-SUNNAH for Qur'an, Sunnah,
+            Islamic reminders and beneficial knowledge.
+        </p>
+
+        <a href="#contact" class="btn">
+            Connect With Us
+        </a>
+
+    </div>
+
+</section>
