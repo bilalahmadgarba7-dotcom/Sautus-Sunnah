@@ -8,9 +8,7 @@ exports.handler = async (event) => {
         })
       };
     }
-
     const { question } = JSON.parse(event.body || "{}");
-
     if (!question || !question.trim()) {
       return {
         statusCode: 400,
@@ -19,7 +17,14 @@ exports.handler = async (event) => {
         })
       };
     }
-
+    if (!process.env.OPENAI_API_KEY) {
+      return {
+        statusCode: 500,
+        body: JSON.stringify({
+          error: "OPENAI_API_KEY is not available to this function."
+        })
+      };
+    }
     const response = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
       headers: {
@@ -30,12 +35,10 @@ exports.handler = async (event) => {
         model: "gpt-5-mini",
         instructions: `
 You are the official AI assistant for SAUTUS-SUNNAH.
-
 Your purpose is to help users learn about Islam based only on:
 - The Qur'an
 - Authentic Sunnah
 - Understanding of the Salaf as-Salih
-
 Rules:
 1. Give respectful and educational answers.
 2. Do not invent Qur'an verses, Hadith, references, scholars, or rulings.
@@ -48,22 +51,19 @@ Rules:
         input: question
       })
     });
-
     const data = await response.json();
-
     if (!response.ok) {
       return {
         statusCode: response.status,
         body: JSON.stringify({
-          error: data.error?.message || "OpenAI request failed."
+          error: data.error?.message || "OpenAI API request failed."
         })
       };
     }
-
     const answer =
       data.output_text ||
+      data.output?.[0]?.content?.[0]?.text ||
       "Sorry, I could not generate an answer.";
-
     return {
       statusCode: 200,
       headers: {
@@ -73,12 +73,11 @@ Rules:
         answer
       })
     };
-
   } catch (error) {
     return {
       statusCode: 500,
       body: JSON.stringify({
-        error: "Server error. Please try again."
+        error: error.message || "Server error."
       })
     };
   }
