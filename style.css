@@ -735,3 +735,55 @@ footer p:last-child {
     </div>
 
 </section>
+/* ========================================
+   SAUTUS-SUNNAH AI
+======================================== */
+
+.ai-assistant {
+    padding: 90px 20px;
+}
+
+.ai-box {
+    max-width: 800px;
+    margin: 35px auto 0;
+    padding: 30px;
+    border-radius: 16px;
+    background: rgba(0, 0, 0, 0.03);
+}
+
+#ai-question {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 16px;
+    resize: vertical;
+    margin-bottom: 18px;
+}
+
+#ask-ai-btn {
+    border: none;
+    cursor: pointer;
+}
+
+#ask-ai-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.ai-loading {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.ai-answer {
+    margin-top: 25px;
+    padding: 20px;
+    border-radius: 10px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    background: #fff;
+    border: 1px solid #ddd;
+}
