@@ -90,22 +90,34 @@ if (askAiButton) {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(
-                    data.error || "Something went wrong."
-                );
+
+                aiAnswer.textContent =
+                    data.error ||
+                    `Request failed (${response.status}).`;
+
+                aiAnswer.style.display = "block";
+
+                return;
             }
 
-            aiAnswer.textContent = data.answer;
+            aiAnswer.textContent =
+                data.answer ||
+                "No answer was returned.";
+
             aiAnswer.style.display = "block";
 
         } catch (error) {
 
             aiAnswer.textContent =
-                "Sorry, something went wrong. Please try again.";
+                error.message ||
+                "Network request failed.";
 
             aiAnswer.style.display = "block";
 
-            console.error("SAUTUS-SUNNAH AI:", error);
+            console.error(
+                "SAUTUS-SUNNAH AI:",
+                error
+            );
 
         } finally {
 
@@ -115,5 +127,7 @@ if (askAiButton) {
         }
 
     });
+
+}
 
 }
