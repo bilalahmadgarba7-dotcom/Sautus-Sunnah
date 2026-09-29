@@ -846,5 +846,86 @@ footer p:last-child {
     }
 
 }
+/* ========================================
+   SOCIAL BRAND BUTTONS
+======================================== */
 
+.social-buttons {
+    max-width: 700px;
+    margin: 35px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+}
+
+.social-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 150px;
+    padding: 14px 22px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    color: #ffffff;
+    border: none;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+/* Facebook */
+.social-btn:nth-child(1) {
+    background: #1877F2;
+}
+
+/* WhatsApp */
+.social-btn:nth-child(2) {
+    background: #25D366;
+}
+
+/* TikTok */
+.social-btn:nth-child(3) {
+    background: #000000;
+}
+
+/* Instagram */
+.social-btn:nth-child(4) {
+    background: linear-gradient(
+        45deg,
+        #F58529,
+        #DD2A7B,
+        #8134AF
+    );
+}
+
+/* YouTube */
+.social-btn:nth-child(5) {
+    background: #FF0000;
+}
+
+/* Hover */
+.social-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
+    opacity: 0.9;
+}
+
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .social-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        max-width: 400px;
+    }
+
+    .social-btn {
+        width: 100%;
+        min-width: 0;
+    }
+
+}
 
